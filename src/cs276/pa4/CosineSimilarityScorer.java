@@ -82,7 +82,10 @@ public class CosineSimilarityScorer extends AScorer
 					else{
 						double temp = mapper.get(queryWord);
 						if(temp!=0)
-							mapper.put(queryWord, (1 + Math.log10(mapper.get(queryWord)))/(1 + Math.log10(d.body_length + smoothingBodyLength)));
+						//	mapper.put(queryWord, (1 + Math.log10(mapper.get(queryWord)))/(1 + Math.log10(d.body_length + smoothingBodyLength)));
+							mapper.put(queryWord, (1.0 + Math.log10(mapper.get(queryWord)) ) / (1.0+Math.log10(d.body_length + smoothingBodyLength) ));
+						
+						//	mapper.put(queryWord, (1.0 + Math.log10(mapper.get(queryWord)) / ((double)1+Math.log10(d.body_length)) ));
 					}
 				}
 			}

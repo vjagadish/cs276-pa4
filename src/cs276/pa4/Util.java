@@ -36,7 +36,7 @@ public class Util {
         numQuery++;
         result.put(query, new ArrayList<Document>());
       } else if (key.equals("url")) {
-        doc = new Document();
+        doc = new Document(value);
         doc.url = new String(value);
         result.get(query).add(doc);
         numDoc++;

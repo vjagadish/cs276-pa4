@@ -16,7 +16,7 @@ import weka.core.Instances;
 public class Learning2Rank {
 
 	public static final double C = Math.pow(2, -4.0);
-	public static final double gamma = Math.pow(2, -7);
+	public static final double gamma = Math.pow(2, -6);
 	public static final boolean isLinearKernel = true;
 	
 	public static Classifier train(String train_data_file, String train_rel_file, int task, Map<String,Double> idfs) {
@@ -33,6 +33,7 @@ public class Learning2Rank {
 			/* 
 			 * @TODO: Your code here, add more features 
 			 * */
+			learner = new PairwiseLearner2(C, gamma, isLinearKernel);
 			System.err.println("Task 3");
 			
 		} else if (task == 4) {
@@ -63,7 +64,8 @@ public class Learning2Rank {
 			  //boolean isLinearKernel = true;
 				learner = new PairwiseLearner1(C, gamma, isLinearKernel);
 			} else if (task == 3) {
-				
+				learner = new PairwiseLearner2(C, gamma, isLinearKernel);
+
 				/* 
 				 * @TODO: Your code here, add more features 
 				 * */
@@ -116,8 +118,14 @@ public class Learning2Rank {
 	    String train_rel_file = args[1];
 	    String test_data_file = args[2];
 	    String test_rel_file = "/Users/jag/Downloads/cs276-pa4/data/pa4.rel.dev";
+            /*uncomment me*/
+            test_rel_file = "data/pa4.rel.dev";
 	    int task = Integer.parseInt(args[3]);
+	    
 	    String ranked_out_file = "/Users/jag/Downloads/cs276-pa4/data/dev_out_file";
+	    /*Uncomment me*/
+	    ranked_out_file="data/op";
+	    
 	    if (args.length == 5){
 	      ranked_out_file = args[4];
 	    }
@@ -125,6 +133,8 @@ public class Learning2Rank {
 	    /* Populate idfs */
 	    //String dfFile = "/Users/jag/Downloads/cs276-pa4/df.txt";
 	    String dfFile = "/Users/jag/Downloads/cs276-pa4/idf.file";
+	    /*Uncomment me*/
+	    dfFile = "data/idf.file";
 	    Map<String,Double> idfs = null;
 	    try {
 	      idfs = Util.loadDF1s(dfFile);
@@ -154,7 +164,8 @@ public class Learning2Rank {
 	      try {
 	        writeRankedResultsToFile(ranked_queries, new PrintStream(new FileOutputStream(ranked_out_file)));
 	        NdcgMain ndcgtest = new NdcgMain(test_rel_file);
-	        System.err.println("# Dev NDCG=" + ndcgtest.score(ranked_out_file));
+	        System.err.println("# Dev NDCG=" + ndcgtest.score(ranked_out_file) + " " + C + " "+gamma);
+	        
 	      } catch (FileNotFoundException e) {
 	        e.printStackTrace();
 	      }

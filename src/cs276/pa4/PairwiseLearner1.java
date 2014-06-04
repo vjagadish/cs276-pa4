@@ -10,7 +10,6 @@ import java.util.Set;
 
 import javax.management.RuntimeErrorException;
 
-import sun.font.CreatedFontTracker;
 import weka.classifiers.Classifier;
 import weka.classifiers.functions.LibSVM;
 import weka.core.Attribute;
